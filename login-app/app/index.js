@@ -22,12 +22,14 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const setUserType = useAuthStore((state) => state.setUserType);
+  const setCurrentUser = useAuthStore(state => state.setCurrentUser);
   const [showPassword, setShowPassword] = useState(false); // add this state
 
   const handleLogin = async () => {
     try {
       const res = await loginUser(id, password);
       setUserType(res.userType);
+      setCurrentUser(res.user);
     } catch (e) {
       setError(e.message);
     }

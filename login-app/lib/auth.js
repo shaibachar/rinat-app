@@ -1,10 +1,12 @@
+import customers from '../data/customers.json';
+import managers from '../data/managers.json';
+
 export const loginUser = async (id, password) => {
-    if (id === 'manager' && password === '1234') {
-      return { userType: 'manager' };
-    } else if (id === 'customer' && password === 'abcd') {
-      return { userType: 'customer' };
-    } else {
-      throw new Error('Invalid credentials');
-    }
-  };
-  
+  const manager = managers.find(u => u.id === id && u.password === password);
+  if (manager) return { userType: 'manager', user: manager };
+
+  const customer = customers.find(u => u.id === id && u.password === password);
+  if (customer) return { userType: 'customer', user: customer };
+
+  throw new Error('Invalid credentials');
+};

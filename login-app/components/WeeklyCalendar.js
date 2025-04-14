@@ -7,11 +7,11 @@ import { useAuthStore } from '../lib/store';
 dayjs.extend(weekday);
 dayjs.extend(isToday);
 
-export default function WeeklyCalendar({ markedDates }) {
+export default function WeeklyCalendar({ markedDates = [] }) {
   const selectedDate = useAuthStore(state => state.selectedDate);
   const setSelectedDate = useAuthStore(state => state.setSelectedDate);
 
-  const startOfWeek = dayjs().weekday(0);
+  const startOfWeek = dayjs().weekday(0); // Sunday
 
   return (
     <Box bg="white" p="3" mt="-4" borderBottomRadius="xl" shadow="2">
@@ -20,7 +20,8 @@ export default function WeeklyCalendar({ markedDates }) {
           const date = startOfWeek.add(i, 'day');
           const dateStr = date.format('YYYY-MM-DD');
           const isSelected = selectedDate === dateStr;
-          const hasSession = markedDates?.includes(dateStr);
+          const hasSession = markedDates.includes(dateStr);
+
           return (
             <Pressable
               key={dateStr}
@@ -35,7 +36,7 @@ export default function WeeklyCalendar({ markedDates }) {
                 w="8"
                 h="8"
                 borderRadius="full"
-                bg={isSelected ? 'pink.500' : hasSession ? 'gray.200' : 'transparent'}
+                bg={isSelected ? 'pink.500' : 'transparent'}
                 justifyContent="center"
                 alignItems="center"
               >
@@ -43,6 +44,9 @@ export default function WeeklyCalendar({ markedDates }) {
                   {date.format('D')}
                 </Text>
               </Box>
+              {hasSession && (
+                <Box w="1.5" h="1.5" bg="pink.500" borderRadius="full" mt="1" />
+              )}
             </Pressable>
           );
         })}

@@ -1,0 +1,21 @@
+[
+    {
+      "id": "customer1",
+      "password": "abcd",
+      "name": "נטלי וייזרמן",
+      "signedSessions": ["session-1"]
+    },
+    {
+      "id": "customer2",
+      "password": "1234",
+      "name": "דני כהן",
+      "signedSessions": ["session-1", "session-2"]
+    },
+    {
+      "id": "customer3",
+      "password": "pass123",
+      "name": "מירי לוי",
+      "signedSessions": []
+    }
+  ]
+  
