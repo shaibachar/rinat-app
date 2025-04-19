@@ -21,7 +21,6 @@ function TopCard() {
       flexDirection="row"
       alignItems="center"
       justifyContent="space-between"
-      mt="-16"
       mb="2"
       shadow="3"
     >
@@ -105,14 +104,14 @@ export default function CustomerPage() {
   return (
     <Box flex={1} bg="gray.50">
       <AppHeader />
-      
-      <Text>סה"כ אימונים נטענו: {sessions.length}</Text>
-
-      <WeeklyCalendar markedDates={sessions.map(s => s.date)} />
 
       <Center px="4">
         <TopCard />
       </Center>
+      
+      <Text>סה"כ אימונים נטענו: {sessions.length}</Text>
+
+      <WeeklyCalendar markedDates={sessions.map(s => s.date)} />
 
       <ScrollView px="4" py="2">
         {/* Section: Selected Date */}

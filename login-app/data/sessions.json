@@ -1,24 +1,50 @@
 [
-    {
-      "id": "session-1",
-      "title": "פילאטיס בוקר",
-      "description": "אימון בוקר לחיזוק הליבה",
-      "date": "2025-04-20",
-      "time": "10:00–11:00"
-    },
-    {
-      "id": "session-2",
-      "title": "יוגה רגועה",
-      "description": "שחרור מתחים וסטרס",
-      "date": "2025-04-22",
-      "time": "18:00–19:00"
-    },
-    {
-      "id": "session-3",
-      "title": "אירובי קבוצתי",
-      "description": "אימון דינמי עם מוזיקה",
-      "date": "2025-04-25",
-      "time": "08:30–09:30"
-    }
-  ]
-  
+  {
+    "id": "session-1",
+    "title": "2025-04-20 פלטיס",
+    "description": "אימון בוקר לחיזוק הליבה",
+    "date": "2025-04-20",
+    "fromTime": "10:00",
+    "toTime": "11:00",
+    "sessionType": "פלטיס",
+    "trainerName": "דנה לוי",
+    "roomName": "נרקיס",
+    "day": "ראשון",
+    "numberOfTimes": "5",
+    "endDate": "2025-05-18",
+    "maxCustomers": "12",
+    "gender": "female"
+  },
+  {
+    "id": "session-2",
+    "title": "2025-04-22 פלטיס מכשירים",
+    "description": "שחרור מתחים וסטרס",
+    "date": "2025-04-22",
+    "fromTime": "18:00",
+    "toTime": "19:00",
+    "sessionType": "פלטיס מכשירים",
+    "trainerName": "רותי כהן",
+    "roomName": "הדס",
+    "day": "שלישי",
+    "numberOfTimes": "8",
+    "endDate": "2025-06-10",
+    "maxCustomers": "10",
+    "gender": "female+male"
+  },
+  {
+    "id": "session-3",
+    "title": "2025-04-25 פלטיס",
+    "description": "אימון דינמי עם מוזיקה",
+    "date": "2025-04-25",
+    "fromTime": "08:30",
+    "toTime": "09:30",
+    "sessionType": "פלטיס",
+    "trainerName": "אורן שמואלי",
+    "roomName": "ירושליים",
+    "day": "שישי",
+    "numberOfTimes": "6",
+    "endDate": "2025-05-30",
+    "maxCustomers": "15",
+    "gender": "male"
+  }
+]

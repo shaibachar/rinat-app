@@ -1,56 +1,60 @@
-import { Box, HStack, Pressable, Text } from 'native-base';
-import dayjs from 'dayjs';
-import weekday from 'dayjs/plugin/weekday';
-import isToday from 'dayjs/plugin/isToday';
-import { useAuthStore } from '../lib/store';
+import React, { useState } from 'react';
+import { Calendar } from 'react-native-calendars';
 
-dayjs.extend(weekday);
-dayjs.extend(isToday);
+const WeeklyCalendar = () => {
+  const today = new Date();
+  const todayStr = today.toISOString().split('T')[0];
 
-export default function WeeklyCalendar({ markedDates = [] }) {
-  const selectedDate = useAuthStore(state => state.selectedDate);
-  const setSelectedDate = useAuthStore(state => state.setSelectedDate);
+  // Calculate current week's dates (Sunday to Saturday)
+  const startOfWeek = new Date(today);
+  startOfWeek.setDate(today.getDate() - startOfWeek.getDay()); // Sunday
 
-  const startOfWeek = dayjs().weekday(0); // Sunday
+  const weekDates = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(startOfWeek);
+    d.setDate(d.getDate() + i);
+    return d.toISOString().split('T')[0];
+  });
+
+  const [selectedDate, setSelectedDate] = useState(todayStr);
+
+  // Disable all days except current week
+  const getMarkedDates = () => {
+    const marked = {};
+
+    const now = new Date();
+    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+    const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+    for (let d = new Date(monthStart); d <= monthEnd; d.setDate(d.getDate() + 1)) {
+      const dateStr = d.toISOString().split('T')[0];
+      if (!weekDates.includes(dateStr)) {
+        marked[dateStr] = { disabled: true, disableTouchEvent: true };
+      }
+    }
+
+    // Mark selected date in red
+    marked[selectedDate] = {
+      selected: true,
+      selectedColor: 'red',
+    };
+
+    return marked;
+  };
+
+  const onDayPress = (day) => {
+    if (weekDates.includes(day.dateString)) {
+      setSelectedDate(day.dateString);
+    }
+  };
 
   return (
-    <Box bg="white" p="3" mt="-4" borderBottomRadius="xl" shadow="2">
-      <HStack justifyContent="space-between">
-        {Array.from({ length: 7 }).map((_, i) => {
-          const date = startOfWeek.add(i, 'day');
-          const dateStr = date.format('YYYY-MM-DD');
-          const isSelected = selectedDate === dateStr;
-          const hasSession = markedDates.includes(dateStr);
-
-          return (
-            <Pressable
-              key={dateStr}
-              onPress={() => setSelectedDate(dateStr)}
-              alignItems="center"
-              flex={1}
-            >
-              <Text fontSize="xs" color="gray.500">
-                {date.format('dd')}
-              </Text>
-              <Box
-                w="8"
-                h="8"
-                borderRadius="full"
-                bg={isSelected ? 'pink.500' : 'transparent'}
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Text color={isSelected ? 'white' : 'black'} fontWeight="bold">
-                  {date.format('D')}
-                </Text>
-              </Box>
-              {hasSession && (
-                <Box w="1.5" h="1.5" bg="pink.500" borderRadius="full" mt="1" />
-              )}
-            </Pressable>
-          );
-        })}
-      </HStack>
-    </Box>
+    <Calendar
+      current={todayStr}
+      markedDates={getMarkedDates()}
+      onDayPress={onDayPress}
+      disableAllTouchEventsForDisabledDays={true}
+    />
   );
-}
+};
+
+export default WeeklyCalendar;
