@@ -12,8 +12,18 @@ A mobile app built with **React Native + Expo**, allowing **customers** to view 
 ### 📅 Customer Home with Weekly Calendar
 <img src="screenshots/customer.png" width="300" />
 
-### 🧑‍💼 Manager Create Course Page
+### 🧑‍💼 Manager Page
 <img src="screenshots/manager.png" width="300" />
+
+
+### 🧑‍💼 Create  Course Page
+<img src="screenshots/create-course1.png" width="300" />
+<img src="screenshots/create-course2.png" width="300" />
+<img src="screenshots/create-course3.png" width="300" />
+<img src="screenshots/create-course4.png" width="300" />
+
+### 🧑‍💼 Update Attendance Page
+<img src="screenshots/update-attendance.png" width="300" />
 
 ---
 
