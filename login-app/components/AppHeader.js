@@ -7,7 +7,7 @@ export default function AppHeader() {
   const userType = useAuthStore(state => state.userType);
 
   return (
-    <Box
+    <Box direction="rtl"
       bg={{
         linearGradient: {
           colors: ['#e1f5fe', '#b3e5fc'],
@@ -24,7 +24,7 @@ export default function AppHeader() {
       px="3"
       py="2"
     >
-      <Text fontSize="lg" fontWeight="bold" color="#1A237E">
+      <Text textAlign="right" fontSize="lg" fontWeight="bold" color="#1A237E">
         מערכת הרישום לאימונים
       </Text>
 

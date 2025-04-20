@@ -1,15 +1,30 @@
-import { Box, Text, VStack, HStack, Button, ScrollView, Pressable, Avatar, Center, useToast, Input } from 'native-base';
-import AppHeader from '../components/AppHeader';
-import WeeklyCalendar from '../components/WeeklyCalendar';
-import { useAuthStore } from '../lib/store';
-import { getSessions } from '../lib/sessionService';
-import { signUpCustomerToSession, getCustomerById } from '../lib/customerService';
-import { useEffect, useState } from 'react';
-import dayjs from 'dayjs';
+import {
+  Box,
+  Text,
+  VStack,
+  HStack,
+  Button,
+  ScrollView,
+  Pressable,
+  Avatar,
+  Center,
+  useToast,
+  Input,
+} from "native-base";
+import AppHeader from "../components/AppHeader";
+import WeeklyCalendar from "../components/WeeklyCalendar";
+import { useAuthStore } from "../lib/store";
+import { getSessions } from "../lib/sessionService";
+import {
+  signUpCustomerToSession,
+  getCustomerById,
+} from "../lib/customerService";
+import { useEffect, useState } from "react";
+import dayjs from "dayjs";
 
 function TopCard() {
-  const logout = useAuthStore(state => state.logout);
-  const user = useAuthStore(state => state.currentUser);
+  const logout = useAuthStore((state) => state.logout);
+  const user = useAuthStore((state) => state.currentUser);
 
   return (
     <Box
@@ -27,22 +42,24 @@ function TopCard() {
       <HStack alignItems="center" space="3">
         <Avatar size="md" bg="white" />
         <Text color="white" fontWeight="bold" fontSize="md">
-          תודה שחזרת אלינו, {user?.name || '...'}!
+          תודה שחזרת אלינו, {user?.name || "..."}!
         </Text>
       </HStack>
       <Pressable onPress={logout}>
-        <Text color="white" underline fontSize="sm">יציאה</Text>
+        <Text color="white" underline fontSize="sm">
+          יציאה
+        </Text>
       </Pressable>
     </Box>
   );
 }
 
 export default function CustomerPage() {
-  const user = useAuthStore(state => state.currentUser);
-  const selectedDate = useAuthStore(state => state.selectedDate);
+  const user = useAuthStore((state) => state.currentUser);
+  const selectedDate = useAuthStore((state) => state.selectedDate);
   const [customer, setCustomer] = useState(null);
   const [sessions, setSessions] = useState([]);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const toast = useToast();
 
   useEffect(() => {
@@ -54,9 +71,9 @@ export default function CustomerPage() {
   const handleSignUp = (sessionId) => {
     if (!user || !user.id) {
       toast.show({
-        title: 'שגיאה: אין מידע על המשתמש',
-        status: 'error',
-        duration: 1500
+        title: "שגיאה: אין מידע על המשתמש",
+        status: "error",
+        duration: 1500,
       });
       return;
     }
@@ -69,26 +86,28 @@ export default function CustomerPage() {
       title: "נרשמת בהצלחה!",
       placement: "top",
       duration: 1500,
-      status: "success"
+      status: "success",
     });
   };
 
   const handleCancel = (sessionId) => {
     const updated = { ...customer };
-    updated.signedSessions = updated.signedSessions.filter(id => id !== sessionId);
+    updated.signedSessions = updated.signedSessions.filter(
+      (id) => id !== sessionId
+    );
     setCustomer(updated);
 
     toast.show({
       title: "הרשמתך בוטלה",
       status: "warning",
       duration: 1500,
-      placement: "top"
+      placement: "top",
     });
   };
 
-  const filtered = sessions.filter(s => s.date === selectedDate);
+  const filtered = sessions.filter((s) => s.date === selectedDate);
   const notSignedSessions = sessions.filter(
-    s =>
+    (s) =>
       !customer?.signedSessions.includes(s.id) &&
       s.title.toLowerCase().includes(search.toLowerCase())
   );
@@ -100,7 +119,7 @@ export default function CustomerPage() {
       </Center>
     );
   }
-  
+
   return (
     <Box flex={1} bg="gray.50">
       <AppHeader />
@@ -108,14 +127,14 @@ export default function CustomerPage() {
       <Center px="4">
         <TopCard />
       </Center>
-      
+
       <Text>סה"כ אימונים נטענו: {sessions.length}</Text>
 
-      <WeeklyCalendar markedDates={sessions.map(s => s.date)} />
-
       <ScrollView px="4" py="2">
+        <WeeklyCalendar markedDates={sessions.map((s) => s.date)} />
+
         {/* Section: Selected Date */}
-        <Text fontSize="md" fontWeight="bold" mb="2">
+        <Text fontSize="md" fontWeight="bold" mb="2" mt="6">
           אימונים בתאריך {selectedDate}:
         </Text>
 
@@ -125,24 +144,26 @@ export default function CustomerPage() {
           </Text>
         ) : (
           <VStack space={4} mb="8">
-            {filtered.map(s => {
+            {filtered.map((s) => {
               const isSigned = customer?.signedSessions.includes(s.id);
               return (
                 <Box key={s.id} bg="white" p="4" borderRadius="lg" shadow="2">
                   <Text bold>{s.title}</Text>
-                  <Text>{dayjs(s.date).format('DD/MM/YYYY')} משעה {s.time}</Text>
-                  <Text color="gray.500" mb="2">{s.description}</Text>
+                  <Text>
+                    {dayjs(s.date).format("DD/MM/YYYY")} משעה {s.time}
+                  </Text>
+                  <Text color="gray.500" mb="2">
+                    {s.description}
+                  </Text>
                   <Button
                     size="sm"
-                    colorScheme={isSigned ? 'danger' : 'pink'}
+                    colorScheme={isSigned ? "danger" : "pink"}
                     variant="solid"
                     onPress={() =>
-                      isSigned
-                        ? handleCancel(s.id)
-                        : handleSignUp(s.id)
+                      isSigned ? handleCancel(s.id) : handleSignUp(s.id)
                     }
                   >
-                    {isSigned ? 'ביטול הרשמה' : 'הרשמה'}
+                    {isSigned ? "ביטול הרשמה" : "הרשמה"}
                   </Button>
                 </Box>
               );
@@ -151,7 +172,9 @@ export default function CustomerPage() {
         )}
 
         {/* Section: Search + Future Sessions */}
-        <Text fontSize="md" fontWeight="bold" mt="6" mb="2">חפש אימון:</Text>
+        <Text fontSize="md" fontWeight="bold" mt="6" mb="2">
+          חפש אימון:
+        </Text>
         <Input
           placeholder="לדוג׳ פילאטיס"
           value={search}
@@ -164,14 +187,20 @@ export default function CustomerPage() {
         </Text>
 
         {notSignedSessions.length === 0 ? (
-          <Text color="gray.500" mb="10">לא נמצאו אימונים חדשים לפי החיפוש.</Text>
+          <Text color="gray.500" mb="10">
+            לא נמצאו אימונים חדשים לפי החיפוש.
+          </Text>
         ) : (
           <VStack space={4} pb="10">
-            {notSignedSessions.map(s => (
+            {notSignedSessions.map((s) => (
               <Box key={s.id} bg="white" p="4" borderRadius="lg" shadow="2">
                 <Text bold>{s.title}</Text>
-                <Text>{dayjs(s.date).format('DD/MM/YYYY')} משעה {s.time}</Text>
-                <Text color="gray.500" mb="2">{s.description}</Text>
+                <Text>
+                  {dayjs(s.date).format("DD/MM/YYYY")} משעה {s.time}
+                </Text>
+                <Text color="gray.500" mb="2">
+                  {s.description}
+                </Text>
                 <Button
                   size="sm"
                   colorScheme="pink"

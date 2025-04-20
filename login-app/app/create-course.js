@@ -79,10 +79,13 @@ export default function CourseCreationPage() {
   return (
     <Box flex={1} bg="gray.50">
       <AppHeader />
-      <WeeklyCalendar markedDates={sessions.map((s) => s.date)} />
 
-      <ScrollView px="6" py="4">
+      <ScrollView px="6" py="4" > 
         <Box bg="white" p="5" borderRadius="xl" shadow="3">
+          <WeeklyCalendar markedDates={sessions.map((s) => s.date)} />
+        </Box>
+
+        <Box bg="white" p="5" borderRadius="xl" shadow="3" mt="6">
           <Text fontSize="lg" fontWeight="bold" mb="4" textAlign="center">
             {editId ? "עריכת אימון" : "יצירת אימון חדש"}
           </Text>
